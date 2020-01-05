@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<!-- saved from url=(0073)https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#0 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  
+  <title>TensorFlow, Keras and deep learning, without a PhD</title>
+  <link rel="stylesheet" href="./TensorFlow, Keras and deep learning, without a PhD_files/css">
+  <link rel="stylesheet" href="./TensorFlow, Keras and deep learning, without a PhD_files/icon">
+  <link rel="stylesheet" href="./TensorFlow, Keras and deep learning, without a PhD_files/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+<script src="./TensorFlow, Keras and deep learning, without a PhD_files/analytics.js.下載"></script></head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14" codelab-gaid="UA-66226300-1" environment="web" category="null"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-66226300-1" id="cloud-tensorflow-mnist" environment="web" feedback-link="https://github.com/googlecodelabs/feedback/issues/new?title=[cloud-tensorflow-mnist]:&amp;labels[]=content-platform&amp;labels[]=cloud" selected="0" google-codelab-ready="" codelab-title="TensorFlow, Keras and deep learning, without a PhD" anayltics-ready="anayltics-ready"><div id="drawer"><div class="codelab-time-container"><div class="time-remaining" title="Time remaining"><i class="material-icons">access_time</i>123 mins remaining</div></div><div class="steps"><ol><li completed="" selected=""><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#0"><span class="step"><span>Overview</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#1"><span class="step"><span>Google Colaboratory quick start</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#2"><span class="step"><span>Train a neural network</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#3"><span class="step"><span>[INFO]: neural networks 101</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#4"><span class="step"><span>Let's jump into the code</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#5"><span class="step"><span>Adding layers</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#6"><span class="step"><span>Special care for deep networks</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#7"><span class="step"><span>Learning rate decay</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#8"><span class="step"><span>Dropout, overfitting</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#9"><span class="step"><span>[INFO] convolutional networks</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#10"><span class="step"><span>A convolutional network</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#11"><span class="step"><span>Dropout again</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#12"><span class="step"><span>Batch normalization</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#13"><span class="step"><span>Train in the cloud on powerful hardware: AI Platform</span></span></a></li><li><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#14"><span class="step"><span>Congratulations!</span></span></a></li></ol></div><div class="metadata"><a target="_blank" href="https://github.com/googlecodelabs/feedback/issues/new?title=[cloud-tensorflow-mnist]:&amp;labels[]=content-platform&amp;labels[]=cloud"><i class="material-icons">bug_report</i> Report a mistake</a></div></div><div id="codelab-title"><div id="codelab-nav-buttons"><a href="https://codelabs.developers.google.com/" id="arrow-back"><i class="material-icons">close</i></a><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#" id="menu"><i class="material-icons">menu</i></a></div><h1 class="title">TensorFlow, Keras and deep learning, without a PhD</h1><div class="codelab-time-container"><div class="time-remaining" title="Time remaining"><i class="material-icons">access_time</i>123 mins remaining</div></div><devsite-user></devsite-user></div><div id="main"><div id="steps"><google-codelab-step label="Overview" duration="4" step="1" style="transform: translate3d(0px, 0px, 0px);" selected=""><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">1. Overview</h2>
+        <p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/74f6fbd758bf19e6.png"></p>
+<p>In this codelab, you will learn how to build and train a neural network that recognises handwritten digits. Along the way, as you enhance your neural network to achieve 99% accuracy, you will also discover the tools of the trade that deep learning professionals use to train their models efficiently.</p>
+<p>This codelab uses the <a href="http://yann.lecun.com/exdb/mnist/" target="_blank">MNIST</a> dataset, a collection of 60,000 labeled digits that has kept generations of PhDs busy for almost two decades. You will solve the problem with less than 100 lines of Python / TensorFlow code.</p>
+<h3 class="checklist" is-upgraded="">What you'll learn</h3>
+<ul class="checklist">
+<li>What is a neural network and how to train it</li>
+<li>How to build a basic 1-layer neural network using tf.keras</li>
+<li>How to add more layers</li>
+<li>How to set up a learning rate schedule</li>
+<li>How to build convolutional neural networks</li>
+<li>How to use regularisation techniques: dropout, batch normalization</li>
+<li>What is overfitting</li>
+</ul>
+<h3 is-upgraded="">What you'll need</h3>
+<p>Just a browser. This workshop can be run entirely with Google Colaboratory.</p>
+<h2 is-upgraded=""><strong>Feedback</strong></h2>
+<p>Please tell us if you see something amiss in this lab or if you think it should be improved. We handle feedback through GitHub issues [<a href="https://github.com/googlecodelabs/feedback/issues/new?title=[cloud-tensorflow-mnist]:&amp;labels[]=content-platform&amp;labels[]=cloud" target="_blank">feedback link</a>].</p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Google Colaboratory quick start" duration="4" step="2" style="transform: translate3d(-110%, 0px, 0px);"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">2. Google Colaboratory quick start</h2>
+        <p>This lab uses Google Colaboratory and requires no setup on your part. You can run it from a Chromebook. Please open the file below, and execute the cells to familiarize yourself with Colab notebooks.</p>
+<p><img style="width: 28.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/983220a6ead98ce0.png"><a href="https://colab.research.google.com/github/GoogleCloudPlatform/training-data-analyst/blob/master/courses/fast-and-lean-data-science/colab_intro.ipynb" target="_blank"><strong><code>Welcome to Colab.ipynb</code></strong></a></p>
+<p>Additional instructions below:</p>
+<h2 is-upgraded=""><strong>Select a GPU backend</strong></h2>
+<p class="image-container"><img style="width: 602.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/AI Platform UI L.png"></p>
+<p>In the Colab menu, select <strong>Runtime &gt; Change runtime type</strong> and then select GPU. Connection to the runtime will happen automatically on first execution, or you can use the "Connect" button in the upper-right corner.</p>
+<h2 is-upgraded=""><strong>Notebook execution</strong></h2>
+<p class="image-container"><img style="width: 585.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/Colab usage screenshot run cell.png"></p>
+<p>Execute cells one at a time by clicking on a cell and using Shift-ENTER. You can also run the entire notebook with <strong>Runtime &gt; Run all</strong></p>
+<h2 is-upgraded=""><strong>Table of contents</strong></h2>
+<p class="image-container"><img style="width: 602.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/Colab usage screenshot TOC1and2.png"></p>
+<p>All notebooks have a table of contents. You can open it using the black arrow on the left.</p>
+<h2 is-upgraded=""><strong>Hidden cells</strong></h2>
+<p class="image-container"><img style="width: 512.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/Colab usage screenshot Hidden Cells.png"></p>
+<p>Some cells will only show their title. This is a Colab-specific notebook feature. You can double click on them to see the code inside but it is usually not very interesting. Typically support or visualization functions. You still need to run these cells for the functions inside to be defined.</p>
+
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Train a neural network" duration="10" step="3" style="transform: translate3d(-110%, 0px, 0px);"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">3. Train a neural network</h2>
+        <p>We will first watch a neural network train. Please open the notebook below and run through all the cells. Do not pay attention to the code yet, we will start explaining it later.</p>
+<p><img style="width: 28.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/983220a6ead98ce0.png"><a href="https://colab.research.google.com/github/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-mnist-tutorial/keras_01_mnist.ipynb" target="_blank"><strong><code>keras_01_mnist.ipynb</code></strong></a></p>
+<p>As you execute the notebook, focus on the visualizations. See below for explanations.</p>
+<h2 is-upgraded=""><strong>Training data</strong></h2>
+<p>We have a dataset of handwritten digits which have been labeled so that we know what each picture represents, i.e. a number between 0 and 9. In the notebook, you will see an excerpt:</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/b36b2993cbf07f0.png"></p>
+<p>The neural network we will build classifies the handwritten digits in their 10 classes (0, .., 9). It does so based on internal parameters that need to have a correct value for the classification to work well. This "correct value" is learned through a training process which requires a "labeled dataset" with images and the associated correct answers.</p>
+<p>How do we know if the trained neural network performs well or not? Using the training dataset to test the network would be cheating. It has already seen that dataset multiple times during training and is most certainly very performant on it. We need another labeled dataset, never seen during training, to evaluate the "real-world" performance of the network. It is called an "<strong>validation dataset</strong>"</p>
+<aside class="special"><p>There are 50,000 training digits in this dataset. We feed a <strong>"batch" </strong>of them of size 128 into the training loop at each iteration so the system will have seen all the training digits once after 391 iterations. We call this an <strong>"epoch"</strong>.</p>
+<p>There are also 10,000 separate "<strong>validation"</strong> digits for testing the performance of the model.</p>
+</aside>
+<h2 is-upgraded=""><strong>Training</strong></h2>
+<p>As training progresses, one batch of training data at a time, internal model parameters get updated and the model gets better and better at recognizing the handwritten digits. You can see it on the training graph:</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/3f7b405649301ea.png"></p>
+<p>On the right, the "accuracy" is simply the percentage of correctly recognized digits. It goes up as training progresses, which is good.</p>
+<p>On the left, we can see the<strong> "loss"</strong>. To drive the training, we will define a "loss" function, which represents how badly the system recognises the digits, and try to minimise it. What you see here is that the loss goes down on both the training and the validation data as the training progresses: that is good. It means the neural network is learning.</p>
+<p>The X-axis represents the number of "epochs" or iterations through the entire dataset.</p>
+<h2 is-upgraded=""><strong>Predictions</strong></h2>
+<p>When the model is trained, we can use it to recognize handwritten digits. The next visualization shows how well it performs on a few digits rendered from local fonts (first line) and then on the 10,000 digits of the validation dataset. The predicted class appears under each digit, in red if it was wrong.</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/7caf5f347365f983.png"></p>
+<p>As you can see, this initial model is not very good but still recognizes some digits correctly. Its final validation accuracy is around 90% which is not so bad for the simplistic model we are starting with, but it still means that it misses 1000 validation digits out of the 10,000. That is far more that can be displayed, which is why it looks like all the answers are wrong (red).</p>
+<h2 is-upgraded=""><strong>Tensors</strong></h2>
+<p>Data is stored in matrices. A 28x28 pixel grayscale image fits into a 28x28 two-dimensional matrix. But for a color image, we need more dimensions. There are 3 color values per pixel (Red, Green, Blue), so a three-dimensional table will be needed with dimensions [28, 28, 3]. And to store a batch of 128 color images, a four-dimensional table is needed with dimensions [128, 28, 28, 3].</p>
+<p>These multi-dimensional tables are called <strong>"tensors"</strong> and the list of their dimensions is their <strong>"shape"</strong>.</p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="[INFO]: neural networks 101" duration="10" step="4" style="transform: translate3d(110%, 0px, 0px);"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">4. [INFO]: neural networks 101</h2>
+        <h2 is-upgraded=""><strong>In a nutshell</strong></h2>
+<p>If all the terms in <strong>bold</strong> in the next paragraph are already known to you, you can move to the next exercise. If your are just starting in deep learning then welcome, and please read on.</p>
+<aside class="special"><p>A neural network classifier is made of several <strong>layers</strong> of <strong>neurons. </strong>For image classification these can be <strong>dense</strong> or, more frequently, <strong>convolutional</strong> layers. They are typically activated with the <strong>relu</strong> activation function. The last layer uses as many neurons as there are classes and is activated with <strong>softmax</strong>. For classification, <strong>cross-entropy</strong> is the most commonly used <strong>loss</strong> function, comparing the <strong>one-hot</strong> encoded <strong>labels</strong> (i.e. correct answers) with probabilities predicted by the neural network. To minimize the loss, it is best to choose an optimizer with momentum, for example <strong>Adam</strong> and train on <strong>batches</strong> of training images and labels.</p>
+</aside>
+<p class="image-container"><img alt="witch.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/bdd8f1f362889583.png"></p>
+<p>For models built as a sequence of layers Keras offers the Sequential API. For example, an image classifier using three dense layers can be written in Keras as:</p>
+<pre><code><span class="pln">model </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="typ">Sequential</span><span class="pun">([</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Flatten</span><span class="pun">(</span><span class="pln">input_shape</span><span class="pun">=[</span><span class="lit">28</span><span class="pun">,</span><span class="pln"> </span><span class="lit">28</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">]),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">200</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">"relu"</span><span class="pun">),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">60</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">"relu"</span><span class="pun">),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">10</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'softmax'</span><span class="pun">)</span><span class="pln"> </span><span class="com"># classifying into 10 classes</span><span class="pln">
+</span><span class="pun">])</span><span class="pln">
+
+</span><span class="com"># this configures the training of the model. Keras calls it "compiling" the model.</span><span class="pln">
+model</span><span class="pun">.</span><span class="pln">compile</span><span class="pun">(</span><span class="pln">
+  optimizer</span><span class="pun">=</span><span class="str">'adam'</span><span class="pun">,</span><span class="pln">
+  loss</span><span class="pun">=</span><span class="pln"> </span><span class="str">'categorical_crossentropy'</span><span class="pun">,</span><span class="pln">
+  metrics</span><span class="pun">=[</span><span class="str">'accuracy'</span><span class="pun">])</span><span class="pln"> </span><span class="com"># % of correct answers</span><span class="pln">
+
+</span><span class="com"># train the model</span><span class="pln">
+model</span><span class="pun">.</span><span class="pln">fit</span><span class="pun">(</span><span class="pln">dataset</span><span class="pun">,</span><span class="pln"> </span><span class="pun">...</span><span class="pln"> </span><span class="pun">)</span></code></pre>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/42641fe68ad7e3f1.png"></p>
+<h2 is-upgraded="">A single dense layer</h2>
+<p>Handwritten digits in the MNIST dataset are 28x28 pixel grayscale images. The simplest approach for classifying them is to use the 28x28=784 pixels as inputs for a 1-layer neural network.</p>
+<p class="image-container"><img alt="Screen Shot 2016-07-26 at 12.32.24.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/d5222c6e3d15770a.png"></p>
+<p>Each <strong>"neuron" </strong>in a neural network does a weighted sum of all of its inputs, adds a constant called the "bias" and then feeds the result through some non-linear <strong>"activation function"</strong>. The <strong>"weights"</strong> and<strong> "biases"</strong> are parameters that will be determined through training. They are initialized with random values at first.</p>
+<p>The picture above represents a 1-layer neural network with 10 output neurons since we want to classify digits into 10 classes (0 to 9).</p>
+<h2 is-upgraded=""><strong>With a matrix multiplication</strong></h2>
+<p>Here is how a neural network layer, processing a collection of images, can be represented by a matrix multiplication:</p>
+<p class="image-container"><img alt="matmul.gif" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/21dabcf6d44e4d6f.gif"></p>
+<p>Using the first column of weights in the weights matrix W, we compute the weighted sum of all the pixels of the first image. This sum corresponds to the first neuron. Using the second column of weights, we do the same for the second neuron and so on until the 10th neuron. We can then repeat the operation for the remaining 99 images. If we call X the matrix containing our 100 images, all the weighted sums for our 10 neurons, computed on 100 images are simply X.W, a matrix multiplication.</p>
+<p>Each neuron must now add its bias (a constant). Since we have 10 neurons, we have 10 bias constants. We will call this vector of 10 values b. It must be added to each line of the previously computed matrix. Using a bit of magic called "broadcasting" we will write this with a simple plus sign.</p>
+<aside class="special"><p>"<strong>Broadcasting</strong>" is a standard trick used in Python and numpy, its scientific computation library. It extends how normal operations work on matrices with incompatible dimensions. "Broadcasting add" means "if you are adding two matrices but you cannot because their dimensions are not compatible, try to replicate the small one as much as needed to make it work."</p>
+</aside>
+<p>We finally apply an activation function, for example "softmax" (explained below) and obtain the formula describing a 1-layer neural network, applied to 100 images:</p>
+<p class="image-container"><img alt="Screen Shot 2016-07-26 at 16.02.36.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/206327168bc85294.png"></p>
+<h2 is-upgraded=""><strong>In Keras</strong></h2>
+<p>With high-level neural network libraries like Keras, we will not need to implement this formula. However, it is important to understand that a neural network layer is just a bunch of multiplications and additions. In Keras, a dense layer would be written as:</p>
+<pre><code><span class="pln">tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">10</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'softmax'</span><span class="pun">)</span></code></pre>
+<h2 is-upgraded=""><strong>Go deep</strong></h2>
+<p>It is trivial to chain neural network layers. The first layer computes weighted sums of of pixels. Subsequent layers compute weighted sums of the outputs of the previous layers. </p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/98a210fef3bb6e9a.png"></p>
+<p>The only difference, apart from the number of neurons, will be the choice of activation function.</p>
+<h2 is-upgraded=""><strong>Activation functions: relu, softmax and sigmoid</strong></h2>
+<p>You would typically use the "relu" activation function for all layers but the last. The last layer, in a classifier, would use "softmax" activation.</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/9aea238a7fa30acb.png"></p>
+<p>Again, a "neuron" computes a weighted sum of all of its inputs, adds a value called "bias" and feeds the result through the activation function.</p>
+<p>The most popular activation function is called <strong>"RELU"</strong> for Rectified Linear Unit. It is a very simple function as you can see on the graph above.</p>
+<p>The traditional activation function in neural networks was the <strong>"sigmoid"</strong> but the "relu" was shown to have better convergence properties almost everywhere and is now preferred.</p>
+<p class="image-container"><img style="width: 336.88px" src="./TensorFlow, Keras and deep learning, without a PhD_files/29151b846e13320d.png"></p>
+<h2 is-upgraded=""><strong>Softmax activation for classification</strong></h2>
+<p>The last layer of our neural network has 10 neurons because we want to classify handwritten digits into 10 classes (0,..9). It should output 10 numbers between 0 and 1 representing the probability of this digit being a 0, a 1, a 2 and so on. For this, on the last layer, we will use an activation function called <strong>"softmax"</strong>.</p>
+<p>Applying softmax on a vector is done by taking the exponential of each element and then normalising the vector, typically by dividing it by its "L1" norm (i.e. sum of absolute values) so that normalized values add up to 1 and can be interpreted as probabilities.</p>
+<p>The output of the last layer, before activation is sometimes called <strong>"logits"</strong>. If this vector is L = [L0, L1, L2, L3, L4, L5, L6, L7, L8, L9], then:</p>
+<p class="image-container"><img style="width: 372.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/a2b4e37e85d0dc20.png"><img style="width: 343.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/3bad6ed3bf5cac6e.gif"></p>
+<aside class="special"><p>Why is "softmax" called softmax? The exponential is a steeply increasing function. It will increase differences between the neuron outputs. Then, as you normalise the vector, the largest element, which dominates the norm, will be normalised to a value close to 1 while all the other elements will end up divided by a large value and normalised to something close to 0. The resulting vector clearly shows which is the winning class, the "max", but retains the original relative order of its values, hence the "soft".</p>
+</aside>
+<h2 is-upgraded=""><strong>Cross-entropy loss</strong></h2>
+<p>Now that our neural network produces predictions from input images, we need to measure how good they are, i.e. the distance between what the network tells us and the correct answers, often called "labels". Remember that we have correct labels for all the images in the dataset.</p>
+<p>Any distance would work, but for classification problems the so-called "cross-entropy distance" is the <a href="https://jamesmccaffrey.wordpress.com/2013/11/05/why-you-should-use-cross-entropy-error-instead-of-classification-error-or-mean-squared-error-for-neural-network-classifier-training/" target="_blank">most effective</a>. We will call this our error or "loss" function:</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/6dbba1bce3cadc36.png"></p>
+<aside class="special"><p>"<strong>One-hot</strong>" encoding means that you represent the label "this is the digit 3" by using a vector of 10 values, all zeros except for the 3rd value which is 1. This vector represents a 100% probability of being the "digit 3". Our neural network also outputs its predictions as a vector of 10 probability values. They are easy to compare.</p>
+</aside>
+<h2 is-upgraded=""><strong>Gradient descent</strong></h2>
+<p>"Training" the neural network actually means using training images and labels to adjust weights and biases so as to minimise the cross-entropy loss function. Here is how it works.</p>
+<p>The cross-entropy is a function of weights, biases, pixels of the training image and its known class.</p>
+<p>If we compute the partial derivatives of the cross-entropy relatively to all the weights and all the biases we obtain a "gradient", computed for a given image, label, and present value of weights and biases. Remember that we can have millions of weights and biases so computing the gradient sounds like a lot of work. Fortunately, TensorFlow does it for us. The mathematical property of a gradient is that it points "up". Since we want to go where the cross-entropy is low, we go in the opposite direction. We update weights and biases by a fraction of the gradient. We then do the same thing again and again using the next batches of training images and labels, in a training loop. Hopefully, this converges to a place where the cross-entropy is minimal although nothing guarantees that this minimum is unique.</p>
+<p class="image-container"><img alt="gradient descent2.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/34e9e76c7715b719.png"></p>
+<aside class="special"><p>"<strong>Learning rate</strong>": You cannot update your weights and biases by the whole length of the gradient at each iteration. It would be like trying to get to the bottom of a valley while wearing seven-league boots. You would be jumping from one side of the valley to the other. To get to the bottom, you need to do smaller steps, i.e. use only a fraction of the gradient, typically in the 1/1000th range. This fraction is called the "learning rate".</p>
+</aside>
+<h2 is-upgraded=""><strong>Mini-batching and momentum</strong></h2>
+<p>You can compute your gradient on just one example image and update the weights and biases immediately, but doing so on a batch of, for example, 128 images gives a gradient that better represents the constraints imposed by different example images and is therefore likely to converge towards the solution faster. The size of the mini-batch is an adjustable parameter.</p>
+<p>This technique, sometimes called "stochastic gradient descent"  has another, more pragmatic benefit: working with batches also means working with larger matrices and these are usually easier to optimise on GPUs and TPUs.</p>
+<p>The convergence can still be a little chaotic though and it can even stop if the gradient vector is all zeros. Does that mean that we have found a minimum? Not always. A gradient component can be zero on a minimum or a maximum. With a gradient vector with millions of elements, if they are all zeros, the probability that every zero corresponds to a minimum and none of them to a maximum point is pretty small. In a space of many dimensions, saddle points are pretty common and we do not want to stop at them.</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/cc544924671fa208.png"></p>
+<p><em>Illustration: a saddle point. The gradient is 0 but it is not a minimum in all directions. (Image attribution </em><a href="https://commons.wikimedia.org/w/index.php?curid=20570051" target="_blank"><em>Wikimedia: By Nicoguaro - Own work, CC BY 3.0</em></a><em>)</em></p>
+<p>The solution is to add some momentum to the optimization algorithm so that it can sail past saddle points without stopping.</p>
+<aside class="special"><p>The TensorFlow library provides a whole range of optimizers, starting with <code>tf.train.GradientDescentOptimizer</code>. More advanced popular optimizers that have a built-in momentum are <code>tf.train.RMSPropOptimizer</code> or <code>tf.train.AdamOptimizer</code>.</p>
+</aside>
+<h2 is-upgraded=""><strong>Glossary</strong></h2>
+<p><strong>batch </strong>or<strong> mini-batch</strong>: training is always performed on batches of training data and labels. Doing so helps the algorithm converge. The "batch" dimension is typically the first dimension of data tensors. For example a tensor of shape [100, 192, 192, 3] contains 100 images of 192x192 pixels with three values per pixel (RGB).</p>
+<p><strong>cross-entropy loss</strong>: a special loss function often used in classifiers.</p>
+<p><strong>dense layer</strong>: a layer of neurons where each neuron is connected to all the neurons in the previous layer.</p>
+<p><strong>features</strong>: the inputs of a neural network are sometimes called "features". The art of figuring out which parts of a dataset (or combinations of parts) to feed into a neural network to get good predictions is called "feature engineering".</p>
+<p><strong>labels</strong>: another name for "classes" or correct answers in a supervised classification problem</p>
+<p><strong>learning rate</strong>: fraction of the gradient by which weights and biases are updated at each iteration of the training loop. </p>
+<p><strong>logits</strong>: the outputs of a layer of neurons before the activation function is applied are called "logits". The term comes from the "logistic function" a.k.a. the "sigmoid function" which used to be the most popular activation function. "Neuron outputs before logistic function" was shortened to "logits".</p>
+<p><strong>loss</strong>: the error function comparing neural network outputs to the correct answers</p>
+<p><strong>neuron</strong>: computes the weighted sum of its inputs, adds a bias and feeds the result through an activation function.</p>
+<p><strong>one-hot encoding</strong>: class 3 out of 5 is encoded as a vector of 5 elements, all zeros except the 3rd one which is 1.</p>
+<p><strong>relu</strong>: rectified linear unit. A popular activation function for neurons.</p>
+<p><strong>sigmoid</strong>: another activation function that used to be popular and is still useful in special cases.</p>
+<p><strong>softmax</strong>: a special activation function that acts on a vector, increases the difference between the largest component and all others, and also normalizes the vector to have a sum of 1 so that it can be interpreted as a vector of probabilities. Used as the last step in classifiers.</p>
+<p><strong>tensor</strong>: A "tensor" is like a matrix but with an arbitrary number of dimensions. A 1-dimensional tensor is a vector. A 2-dimensions tensor is a matrix. And then you can have tensors with 3, 4, 5 or more dimensions.</p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Let&#39;s jump into the code" duration="15" step="5" style="transform: translate3d(110%, 0px, 0px);"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">5. Let's jump into the code</h2>
+        <p>Back to the study notebook and this time, let's read the code.</p>
+<p><img style="width: 28.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/983220a6ead98ce0.png"><a href="https://colab.research.google.com/github/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-mnist-tutorial/keras_01_mnist.ipynb" target="_blank"><strong><code>keras_01_mnist.ipynb</code></strong></a></p>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>Your task in this section is to read the code and understand it so that you can improve on it later.</p>
+</aside>
+<p>Let's go through all the cell in this notebook.</p>
+<h2 is-upgraded=""><strong>Cell "Parameters"</strong></h2>
+<p>The batch size, number of training epochs and location of the data files is defined here. Data files are hosted in a Google Cloud Storage (GCS) bucket which is why their address starts with <code>gs://</code></p>
+<h2 is-upgraded=""><strong>Cell "Imports"</strong></h2>
+<p>All the necessary Python libraries are imported here, including TensorFlow and also matplotlib for visualizations.</p>
+<h2 is-upgraded="">Cell "<strong>visualization utilities [RUN ME]</strong><strong>"</strong></h2>
+<p>This cell contains uninteresting visualization code. It is collapsed by default but you can open it and look at the code when you have the time by double-clicking on it.</p>
+<aside class="warning"><p>You must run this cell (SHIFT-ENTER), otherwise the functions defined inside will not be parsed and you will get errors later.</p>
+</aside>
+<h2 is-upgraded=""><strong>Cell "</strong><strong>tf.data.Dataset: parse files and prepare training and validation datasets</strong><strong>"</strong></h2>
+<p>This cell used the tf.data.Dataset API to load the MNIST dataset form the data files. It is not necessary to spend too much time on this cell. If you are interested in the tf.data.Dataset API, here is a tutorial that explains it: <a href="https://codelabs.developers.google.com/codelabs/keras-flowers-data/#0" target="_blank">TPU-speed data pipelines</a>. For now, the basics are:</p>
+<p>Images and labels (correct answers) from the MNIST dataset are stored in fixed length records in 4 files. The files can be loaded with the dedicated fixed record function:<br></p>
+<pre><code><span class="pln">imagedataset </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">data</span><span class="pun">.</span><span class="typ">FixedLengthRecordDataset</span><span class="pun">(</span><span class="pln">image_filename</span><span class="pun">,</span><span class="pln"> </span><span class="lit">28</span><span class="pun">*</span><span class="lit">28</span><span class="pun">,</span><span class="pln"> header_bytes</span><span class="pun">=</span><span class="lit">16</span><span class="pun">)</span></code></pre>
+<p>We now have a dataset of image bytes. They need to be decoded into images. We define a function for doing so. The image is not compressed so the function does not need to decode anything (<code>decode_raw</code> does basically nothing). The image is then converted to floating point values between 0 and 1. We could reshape it here as a 2D image but actually we keep it as a flat array of pixels of size 28*28 because that is what our initial dense layer expects.</p>
+<pre><code><span class="kwd">def</span><span class="pln"> read_image</span><span class="pun">(</span><span class="pln">tf_bytestring</span><span class="pun">):</span><span class="pln">
+    image </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">decode_raw</span><span class="pun">(</span><span class="pln">tf_bytestring</span><span class="pun">,</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">uint8</span><span class="pun">)</span><span class="pln">
+    image </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">cast</span><span class="pun">(</span><span class="pln">image</span><span class="pun">,</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">float32</span><span class="pun">)/</span><span class="lit">256.0</span><span class="pln">
+    image </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">reshape</span><span class="pun">(</span><span class="pln">image</span><span class="pun">,</span><span class="pln"> </span><span class="pun">[</span><span class="lit">28</span><span class="pun">*</span><span class="lit">28</span><span class="pun">])</span><span class="pln">
+    </span><span class="kwd">return</span><span class="pln"> image</span></code></pre>
+<p>We apply this function to the dataset using <code>.map</code> and obtain a dataset of images:</p>
+<pre><code><span class="pln">imagedataset </span><span class="pun">=</span><span class="pln"> imagedataset</span><span class="pun">.</span><span class="pln">map</span><span class="pun">(</span><span class="pln">read_image</span><span class="pun">,</span><span class="pln"> num_parallel_calls</span><span class="pun">=</span><span class="lit">16</span><span class="pun">)</span></code></pre>
+<p>We do the same kind of reading and decoding for labels and we <code>.zip</code> images and labels together:</p>
+<pre><code><span class="pln">dataset </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">data</span><span class="pun">.</span><span class="typ">Dataset</span><span class="pun">.</span><span class="pln">zip</span><span class="pun">((</span><span class="pln">imagedataset</span><span class="pun">,</span><span class="pln"> labelsdataset</span><span class="pun">))</span></code></pre>
+<p>We now have a dataset of pairs (image, label). This is what our model expects. We are not quite ready to use it in the training function yet:</p>
+<pre><code><span class="pln">dataset </span><span class="pun">=</span><span class="pln"> dataset</span><span class="pun">.</span><span class="pln">cache</span><span class="pun">()</span><span class="pln">
+dataset </span><span class="pun">=</span><span class="pln"> dataset</span><span class="pun">.</span><span class="pln">shuffle</span><span class="pun">(</span><span class="lit">5000</span><span class="pun">,</span><span class="pln"> reshuffle_each_iteration</span><span class="pun">=</span><span class="kwd">True</span><span class="pun">)</span><span class="pln">
+dataset </span><span class="pun">=</span><span class="pln"> dataset</span><span class="pun">.</span><span class="pln">repeat</span><span class="pun">()</span><span class="pln">
+dataset </span><span class="pun">=</span><span class="pln"> dataset</span><span class="pun">.</span><span class="pln">batch</span><span class="pun">(</span><span class="pln">batch_size</span><span class="pun">)</span><span class="pln">
+dataset </span><span class="pun">=</span><span class="pln"> dataset</span><span class="pun">.</span><span class="pln">prefetch</span><span class="pun">(</span><span class="pln">tf</span><span class="pun">.</span><span class="pln">data</span><span class="pun">.</span><span class="pln">experimental</span><span class="pun">.</span><span class="pln">AUTOTUNE</span><span class="pun">)</span></code></pre>
+<p>The tf.data.Dataset API has all the necessary utility function for preparing datasets:</p>
+<p><code>.cache</code> caches the dataset in RAM. This is a tiny dataset so it will work. <code>.shuffle</code> shuffles it with a buffer of 5000 elements. It is important that training data are well shuffled. <code>.repeat</code> loops the dataset. We will be training on it multiple times (multiple epochs). <code>.batch</code> pulls multiple images and labels together into a mini-natch. Finally, <code>.prefetch</code> can use the CPU to prepare the next batch while the current batch is being trained on the GPU.</p>
+<p>The validation dataset is prepared in a similar way. We are now ready to define a model and use this dataset to train it.</p>
+<h2 is-upgraded=""><strong>Cell "Keras Model"</strong></h2>
+<p>All of our models will be straight sequences of layers so we can use the <code>tf.keras.Sequential</code> style to create them. Initially here, it's a single dense layer. It has 10 neurons because we are classifying handwritten digits into 10 classes. It uses "softmax" activation because it is the last layer in a classifier.</p>
+<p>A Keras model also needs to know the shape of its inputs. <code>tf.keras.layers.Input</code> can be used to define it. Here, input vectors are flat vectors of pixel values of length 28*28.</p>
+<pre><code><span class="pln">model </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="typ">Sequential</span><span class="pun">(</span><span class="pln">
+  </span><span class="pun">[</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Input</span><span class="pun">(</span><span class="pln">shape</span><span class="pun">=(</span><span class="lit">28</span><span class="pun">*</span><span class="lit">28</span><span class="pun">,)),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">10</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'softmax'</span><span class="pun">)</span><span class="pln">
+  </span><span class="pun">])</span><span class="pln">
+
+model</span><span class="pun">.</span><span class="pln">compile</span><span class="pun">(</span><span class="pln">optimizer</span><span class="pun">=</span><span class="str">'sgd'</span><span class="pun">,</span><span class="pln">
+              loss</span><span class="pun">=</span><span class="str">'categorical_crossentropy'</span><span class="pun">,</span><span class="pln">
+              metrics</span><span class="pun">=[</span><span class="str">'accuracy'</span><span class="pun">])</span><span class="pln">
+
+</span><span class="com"># print model layers</span><span class="pln">
+model</span><span class="pun">.</span><span class="pln">summary</span><span class="pun">()</span><span class="pln">
+
+</span><span class="com"># utility callback that displays training curves</span><span class="pln">
+plot_training </span><span class="pun">=</span><span class="pln"> </span><span class="typ">PlotTraining</span><span class="pun">(</span><span class="pln">sample_rate</span><span class="pun">=</span><span class="lit">10</span><span class="pun">,</span><span class="pln"> zoom</span><span class="pun">=</span><span class="lit">1</span><span class="pun">)</span></code></pre>
+<p>Configuring the model is done in Keras using the <code>model.compile</code> function. Here we use the basic optimizer <code>'sgd'</code> (Stochastic Gradient Descent). A classification model requires a cross-entropy loss function, called <code>'categorical_crossentropy'</code> in Keras. Finally, we ask the model to compute the <code>'accuracy'</code> metric, which is the percentage of correctly classified images.</p>
+<p>Keras offers the very nice <code>model.summary()</code> utility that prints the details of the model you have created. Your kind instructor has added the <code>PlotTraining</code> utility (defined in the "visualization utilities" cell) which will display various training curves during the training.</p>
+<h2 is-upgraded=""><strong>Cell "Train and validate the model"</strong></h2>
+<p>This is where the training happens, by calling <code>model.fit</code> and passing in both the training and validation datasets. By default, Keras runs a round of validation at the end of each epoch.</p>
+<pre><code><span class="pln">model</span><span class="pun">.</span><span class="pln">fit</span><span class="pun">(</span><span class="pln">training_dataset</span><span class="pun">,</span><span class="pln"> steps_per_epoch</span><span class="pun">=</span><span class="pln">steps_per_epoch</span><span class="pun">,</span><span class="pln"> epochs</span><span class="pun">=</span><span class="pln">EPOCHS</span><span class="pun">,</span><span class="pln">
+          validation_data</span><span class="pun">=</span><span class="pln">validation_dataset</span><span class="pun">,</span><span class="pln"> validation_steps</span><span class="pun">=</span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+          callbacks</span><span class="pun">=[</span><span class="pln">plot_training</span><span class="pun">])</span></code></pre>
+<p>In Keras, it is possible to add custom behaviors during training by using callbacks. That is how the dynamically updating training plot was implemented for this workshop.</p>
+<h2 is-upgraded=""><strong>Cell "Visualize predictions"</strong></h2>
+<p>Once the model is trained, we can get predictions from it by calling <code>model.predict()</code>: </p>
+<pre><code><span class="pln">probabilities </span><span class="pun">=</span><span class="pln"> model</span><span class="pun">.</span><span class="pln">predict</span><span class="pun">(</span><span class="pln">font_digits</span><span class="pun">,</span><span class="pln"> steps</span><span class="pun">=</span><span class="lit">1</span><span class="pun">)</span><span class="pln">
+predicted_labels </span><span class="pun">=</span><span class="pln"> np</span><span class="pun">.</span><span class="pln">argmax</span><span class="pun">(</span><span class="pln">probabilities</span><span class="pun">,</span><span class="pln"> axis</span><span class="pun">=</span><span class="lit">1</span><span class="pun">)</span></code></pre>
+<p>Here we have prepared a set of printed digits rendered from local fonts, as a test. Remember that the neural network returns a vector of 10 probabilities from its final "softmax". To get the label, we have to find out which probability is the highest. <code>np.argmax</code> from the numpy library does that.</p>
+<p>To understand why the <code>axis=1</code> parameter is needed, please remember that we have processed a batch of 128 images and therefore the model returns 128 vectors of probabilities. The shape of the output tensor is [128, 10]. We are computing the argmax across the 10 probabilities returned for each image, thus <code>axis=1</code> (the first axis being 0).</p>
+<p>This simple model already recognises 90% of the digits. Not bad, but you will now improve this significantly.</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/c667262d2dcbb6bf.png"></p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Adding layers" duration="10" step="6" style="transform: translate3d(110%, 0px, 0px);"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">6. Adding layers</h2>
+        <p class="image-container"><img alt="godeep.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/a2832d28e7a4d272.png"></p>
+<p>To improve the recognition accuracy we will add more layers to the neural network.</p>
+<p class="image-container"><img alt="Screen Shot 2016-07-27 at 15.36.55.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/77bc41f211c9fb29.png"></p>
+<p>We keep softmax as the activation function on the last layer because that is what works best for classification. On intermediate layers however we will use the most classical activation function: the sigmoid:</p>
+<p class="image-container"><img style="width: 336.88px" src="./TensorFlow, Keras and deep learning, without a PhD_files/29151b846e13320d.png"></p>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>Please add a couple of intermediate dense layers activated with "sigmoid" before your "softmax" layer. The number of neurons in them can be anything between 784 (the number of input pixels) and 10 (the number of output neurons). Then retrain the model.</p>
+<p><strong>Warning</strong>: to retrain, you must re-run the "Keras model" cell to define a new model, then the training cell. Just re-running the training cell will continue the training of your previous model.</p>
+</aside>
+<p>For example, your model could look like this (do not forget the commas, <code>tf.keras.Sequential</code> takes a comma-separated list of layers):</p>
+<pre><code><span class="pln">model </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="typ">Sequential</span><span class="pun">(</span><span class="pln">
+  </span><span class="pun">[</span><span class="pln">
+      tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Input</span><span class="pun">(</span><span class="pln">shape</span><span class="pun">=(</span><span class="lit">28</span><span class="pun">*</span><span class="lit">28</span><span class="pun">,)),</span><span class="pln">
+      tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">200</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'sigmoid'</span><span class="pun">),</span><span class="pln">
+      tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">60</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'sigmoid'</span><span class="pun">),</span><span class="pln">
+      tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">10</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'softmax'</span><span class="pun">)</span><span class="pln">
+  </span><span class="pun">])</span></code></pre>
+<p>Look at the "summary" of you model. It now has at least 10 times more parameters. It should be 10x better! But for some reason, it isn't ...</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/48b5b88c5614b82d.png"></p>
+<p>The loss seems to have shot through the roof too. Something is not quite right.</p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Special care for deep networks" duration="10" step="7"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">7. Special care for deep networks</h2>
+        <p>You have just experienced neural networks, as people used to design them in the 80's and 90's. No wonder they gave up on the idea, ushering the so-called "AI winter". Indeed, as you add layers, neural networks have more and more difficulties to converge.</p>
+<p>It turns out that deep neural networks with many layers (20, 50, even 100 today) can work really well, provided a couple of mathematical dirty tricks to make them converge. The discovery of these simple tricks is one of the reasons for the renaissance of deep learning in the 2010's.</p>
+<h2 is-upgraded=""><strong>RELU activation</strong></h2>
+<p class="image-container"><img alt="relu.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/35a0e96b3da8a465.png"></p>
+<p>The sigmoid activation function is actually quite problematic in deep networks. It squashes all values between 0 and 1 and when you do so repeatedly, neuron outputs and their gradients can vanish entirely. It was mentioned for historical reasons, but modern networks use the RELU (Rectified Linear Unit) which looks like this:</p>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>Replace all <code>activation='sigmoid'</code> with <code>activation='relu'</code> in your layers and train again.</p>
+</aside>
+<p class="image-container"><img style="width: 337.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/349d06db753b5b45.png"></p>
+<aside class="special"><p>Why is the sigmoid problematic? Look how it behaves on the sides: it gets flat.</p>
+<p class="image-container"><img style="width: 349.04px" src="./TensorFlow, Keras and deep learning, without a PhD_files/29151b846e13320d.png"></p>
+<p>And that means its derivative there is close to zero. Remember how the training progresses, by following the gradient, which is a vector of derivatives. With sigmoid activation, especially if there are many layers, the gradient can become very small and training get slower and slower.</p>
+</aside>
+<p>The relu on the other hand has a derivative of 1, at least on its right side. With RELU activation, even if the gradients coming from some neurons can be zero, there will always be others giving a clear non-zero gradient and training can continue at a good pace.</p>
+<h2 is-upgraded=""><strong>A better optimizer</strong></h2>
+<p>In very high-dimensional spaces like here — we have on the order of 10K weights and biases — "saddle points" are frequent. These are points that are not local minima, but where the gradient is nevertheless zero and the gradient descent optimizer stays stuck there. TensorFlow has a full array of available optimizers, including some that work with an amount of inertia and will safely sail past saddle points.</p>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>Replace the <code>'sgd'</code> optimizer with a better one, for example <code>'adam'</code> and train again.</p>
+</aside>
+<h2 is-upgraded=""><strong>Random initializations</strong></h2>
+<p>The art of initializing weights biases before training is an area of research in itself, with numerous papers published on the topic. You can have a look at all the initializers available in Keras <a href="https://keras.io/initializers/" target="_blank">here</a>. Fortunately, Keras does the right thing by default and uses the <code>'glorot_uniform'</code> initializer which is the best in almost all cases.</p>
+<p>There is nothing for you to do, since Keras already does the right thing.</p>
+<h2 is-upgraded=""><strong>NaN ???</strong></h2>
+<p>The cross-entropy formula involves a logarithm and log(0) is Not a Number (NaN, a numerical crash if you prefer). Can the input to the cross-entropy be 0? The input comes from softmax which is essentially an exponential and an exponential is never zero. So we are safe!</p>
+<p>Really? In the beautiful world of mathematics, we would be safe, but in the computer world, exp(-150), represented in float32 format, is as ZERO as it gets and the cross-entropy crashes.</p>
+<p>Fortunately, there is nothing for you to do here either, since Keras takes care of this and computes softmax followed by the cross-entropy in an especially careful way to ensure numerical stability and avoid the dreaded NaNs.</p>
+<h2 is-upgraded=""><strong>Success?</strong></h2>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/fed3cab7dd984849.png"></p>
+<p>You should now be getting to 97% accuracy. The goal in this workshop is to get significantly above 99% so let's keep going.</p>
+<p>If you are stuck, here is the solution at this point:</p>
+<p><img style="width: 28.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/983220a6ead98ce0.png"><a href="https://colab.research.google.com/github/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-mnist-tutorial/keras_02_mnist_dense.ipynb" target="_blank"><strong><code>keras_02_mnist_dense.ipynb</code></strong></a></p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Learning rate decay" duration="10" step="8"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">8. Learning rate decay</h2>
+        <p>Maybe we can try to train faster? The default learning rate in the Adam optimizer is 0.001. Let's try to increase it.</p>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>Increase the learning rate from its default value of 0.001 to 0.01. For that, you will have to replace the <code>'adam'</code> predefined optimizer with an actual instance of an Adam optimizer so that you have access to its configuration parameters:</p>
+<p><code>optimizer=tf.keras.optimizers.Adam(lr=0.01)</code></p>
+<p>Please also bump the zoom factor to 5 in PlotTraining. This zooms around 0 on losses and around 1 on accuracies to help you see what is going on: <code>PlotTraining(sample_rate=10, </code><strong><code>zoom=5</code></strong><code>)</code></p>
+</aside>
+<p>Going faster does not seem to help a lot and what is all this noise?</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/4a0408b3c77c5521.png"></p>
+<p>The training curves are really noisy and look at both validation curves: they are jumping up and down. This means that we are going too fast. We could go back to our previous speed, but there is a better way.</p>
+<p class="image-container"><img alt="slow down.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/80456ff8ba0a3dac.png"></p>
+<p>The good solution is to start fast and decay the learning rate exponentially. In Keras, you can do this with the <code>tf.keras.callbacks.LearningRateScheduler</code> callback.</p>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>Implement a learning rate schedule that decays the learning rate exponentially. You will find useful code snippets below.</p>
+</aside>
+<p>Useful code for copy-pasting:</p>
+<pre><code><span class="com"># lr decay function</span><span class="pln">
+</span><span class="kwd">def</span><span class="pln"> lr_decay</span><span class="pun">(</span><span class="pln">epoch</span><span class="pun">):</span><span class="pln">
+  </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0.01</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> math</span><span class="pun">.</span><span class="pln">pow</span><span class="pun">(</span><span class="lit">0.6</span><span class="pun">,</span><span class="pln"> epoch</span><span class="pun">)</span><span class="pln">
+
+</span><span class="com"># lr schedule callback</span><span class="pln">
+lr_decay_callback </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">callbacks</span><span class="pun">.</span><span class="typ">LearningRateScheduler</span><span class="pun">(</span><span class="pln">lr_decay</span><span class="pun">,</span><span class="pln"> verbose</span><span class="pun">=</span><span class="kwd">True</span><span class="pun">)</span><span class="pln">
+
+</span><span class="com"># important to see what you are doing</span><span class="pln">
+plot_learning_rate</span><span class="pun">(</span><span class="pln">lr_decay</span><span class="pun">,</span><span class="pln"> EPOCHS</span><span class="pun">)</span></code></pre>
+<p>Do not forget to use the <code>lr_decay_callback</code> you have created. Add it to the list of callbacks in <code>model.fit</code>:</p>
+<pre><code><span class="pln">model</span><span class="pun">.</span><span class="pln">fit</span><span class="pun">(...,</span><span class="pln">  callbacks</span><span class="pun">=[</span><span class="pln">plot_training</span><span class="pun">,</span><span class="pln"> lr_decay_callback</span><span class="pun">])</span></code></pre>
+<p>The impact of this little change is spectacular. You see that most of the noise is gone and the test accuracy is now above 98% in a sustained way.</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/24e7aeaa475c0704.png"></p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Dropout, overfitting" duration="10" step="9"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">9. Dropout, overfitting</h2>
+        <p>The model seems to be converging nicely now. Let's try to go even deeper.</p>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>If you have not done so yet, please increase the depth of the model to at least 4 dense layers and re-train. You can use the following number of neurons in the layers: 200, 100, 60, 10.</p>
+<p>Please also bump the zoom factor to 10 in PlotTraining. This zooms around 0 on losses and around 1 on accuracies to help you see what is going on: <code>PlotTraining(sample_rate=10, </code><strong><code>zoom=10</code></strong><code>)</code></p>
+</aside>
+<p>Does it help?</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/2511c1a9d7017aff.png"></p>
+<p>Not really, the accuracy is still stuck at 98% and look at the validation loss. It is going up! The learning algorithm works on training data only and optimises the training loss accordingly. It never sees validation data so it is not surprising that after a while its work no longer has an effect on the validation loss which stops dropping and sometimes even bounces back up.</p>
+<p>This does not immediately affect the real-world recognition capabilities of your model, but it will prevent you from running many iterations and is generally a sign that the training is no longer having a positive effect.</p>
+<p class="image-container"><img alt="dropout.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/ff192183d1cf2023.png"></p>
+<p>This disconnect is usually called "overfitting" and when you see it, you can try to apply a regularisation technique called "dropout". The dropout technique shoots random neurons at each training iteration.</p>
+<aside class="special"><p>Dropout is one of the oldest regularization techniques in deep learning. At each training iteration, it drops random neurons from the network with a probability p (typically 25% to 50%). In practice, neuron outputs are set to 0. The net result is that these neurons will not participate in the loss computation this time around and they will not get weight updates. Different neurons will be dropped at each training iteration.</p>
+<p class="image-container"><img style="width: 581.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/Screen Shot 2019-06-27 at 16.07.46.png"></p>
+<p> When testing the performance of your network of course you put all the neurons back (dropout rate=0). <strong>Keras does this automatically, so all you have to do is add a </strong><strong><code>tf.keras.layers.Dropout</code></strong><strong> layer. It will have the correct behavior at training and eval time automatically.</strong></p>
+<p>Why does it work ? The theory is that neural networks have so much freedom between their numerous layers that it is entirely possible for a layer to evolve a bad behaviour and for the next layer to compensate for it. This is not an ideal use of neurons. With dropout, there is a high probability that the neuron "fixing" the problem is not there in a given training round. The bad behaviour of the offending layer become obvious and weights evolve towards a better behavior.</p>
+</aside>
+
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>You can add dropout after each intermediate dense layer in the network. Do not add dropout after your softmax layer. You would be dropping your predicted probabilities. You can add a 25% dropout rate with: <code>tf.keras.layers.Dropout(0.25)</code></p>
+</aside>
+<p>Did it work?</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/cc83b2418072b626.png"></p>
+<p>Noise reappears (unsurprisingly given how dropout works). The validation loss does not seem to be creeping up anymore, but it is higher overall than without dropout. And the validation accuracy went down a bit. This is a fairly disappointing result.</p>
+<p>It looks like dropout was not the correct solution, or maybe "overfitting" is a more complex concept and some of its causes are not amenable to a "dropout" fix?</p>
+<p>What is "overfitting"? Overfitting happens when a neural network learns "badly", in a way that works for the training examples but not so well on real-world data. There are regularisation techniques like dropout that can force it to learn in a better way but overfitting also has deeper roots.</p>
+<p class="image-container"><img alt="overfitting.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/3291d60208e7ce7f.png"> </p>
+<p>Basic overfitting happens when a neural network has too many degrees of freedom for the problem at hand. Imagine we have so many neurons that the network can store all of our training images in them and then recognise them by pattern matching. It would fail on real-world data completely. A neural network must be somewhat constrained so that it is forced to generalise what it learns during training.</p>
+<p>If you have very little training data, even a small network can learn it by heart and you will see "overfitting". Generally speaking, you always need lots of data to train neural networks.</p>
+<p>Finally, if you have done everything by the book, experimented with different sizes of network to make sure its degrees of freedom are constrained, applied dropout, and trained on lots of data you might still be stuck at a performance level that nothing seems to be able to improve. This means that your neural network, in its present shape, is not capable of extracting more information from your data, as in our case here.</p>
+<p>Remember how we are using our images, flattened into a single vector? That was a really bad idea. Handwritten digits are made of shapes and we discarded the shape information when we flattened the pixels. However, there is a type of neural network that can take advantage of shape information: convolutional networks. Let us try them.</p>
+<p>If you are stuck, here is the solution at this point:</p>
+<p><img style="width: 28.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/983220a6ead98ce0.png"><a href="https://colab.research.google.com/github/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-mnist-tutorial/keras_03_mnist_dense_lrdecay_dropout.ipynb" target="_blank"><strong><code>keras_03_mnist_dense_lrdecay_dropout.ipynb</code></strong></a></p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="[INFO] convolutional networks" duration="15" step="10"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">10. [INFO] convolutional networks</h2>
+        <h2 is-upgraded=""><strong>In a nutshell</strong></h2>
+<p>If all the terms in <strong>bold</strong> in the next paragraph are already known to you, you can move to the next exercise. If your are just starting out with convolutional neural networks, please read on.</p>
+<p class="image-container"><img alt="convolutional.gif" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/53c160301db12a6e.gif"></p>
+<p><em>Illustration: filtering an image with two successive filters made of 4x4x3=48 learnable weights each.</em></p>
+<aside class="special"><p>Convolutional neural networks apply a series of learnable filters to the input image. A convolutional layer is defined by the <strong>filter (or kernel) size</strong>, the <strong>number of filters</strong> applied and the <strong>stride</strong>. The input and the output of a convolutional layer each have three dimensions (width, height, number of channels), starting with the input image (width, height, RGB channels). When stacking convolutional layers, the width and height of the output can be adjusted by using a stride &gt;1 or with a <strong>max-pooling</strong> operation. The depth of the output (number of channels) is adjusted by using more or fewer filters.</p>
+</aside>
+<p>This is how a simple convolutional neural network looks in Keras:</p>
+<pre><code><span class="pln">model </span><span class="pun">=</span><span class="pln"> tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="typ">Sequential</span><span class="pun">([</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Reshape</span><span class="pun">(</span><span class="pln">input_shape</span><span class="pun">=(</span><span class="lit">28</span><span class="pun">*</span><span class="lit">28</span><span class="pun">,),</span><span class="pln"> target_shape</span><span class="pun">=(</span><span class="lit">28</span><span class="pun">,</span><span class="pln"> </span><span class="lit">28</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">)),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Conv2D</span><span class="pun">(</span><span class="pln">kernel_size</span><span class="pun">=</span><span class="lit">3</span><span class="pun">,</span><span class="pln"> filters</span><span class="pun">=</span><span class="lit">12</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'relu'</span><span class="pun">),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Conv2D</span><span class="pun">(</span><span class="pln">kernel_size</span><span class="pun">=</span><span class="lit">6</span><span class="pun">,</span><span class="pln"> filters</span><span class="pun">=</span><span class="lit">24</span><span class="pun">,</span><span class="pln"> strides</span><span class="pun">=</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'relu'</span><span class="pun">),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Conv2D</span><span class="pun">(</span><span class="pln">kernel_size</span><span class="pun">=</span><span class="lit">6</span><span class="pun">,</span><span class="pln"> filters</span><span class="pun">=</span><span class="lit">32</span><span class="pun">,</span><span class="pln"> strides</span><span class="pun">=</span><span class="lit">2</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'relu'</span><span class="pun">),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Flatten</span><span class="pun">(),</span><span class="pln">
+    tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">10</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'softmax'</span><span class="pun">)</span><span class="pln">
+</span><span class="pun">])</span></code></pre>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/42641fe68ad7e3f1.png"></p>
+<p>In a layer of a convolutional network, one "neuron" does a weighted sum of the pixels just above it, across a small region of the image only. It adds a bias and feeds the sum through an activation function, just as a neuron in a regular dense layer would. This operation is then repeated across the entire image using the same weights. Remember that in dense layers, each neuron had its own weights. Here, a single "patch" of weights slides across the image in both directions (a "convolution"). The output has as many values as there are pixels in the image (some padding is necessary at the edges though). It is a filtering operation. In the illustration above, it uses a filter of 4x4x3=48 weights.</p>
+<p>However, 48 weights will not be enough. To add more degrees of freedom, we repeat the same operation with a new set of weights. This produces a new set of filter outputs. Let's call it a "channel" of outputs by analogy with the R,G,B channels in the input image.</p>
+<p class="image-container"><img alt="Screen Shot 2016-07-29 at 16.02.37.png" style="width: 448.93px" src="./TensorFlow, Keras and deep learning, without a PhD_files/40fd4b6ad8dfb6d2.png"></p>
+<p>The two (or more) sets of weights can be summed up as one tensor by adding a new dimension. This gives us the generic shape of the weights tensor for a convolutional layer. Since the number of input and output channels are parameters, we can start stacking and chaining convolutional layers.</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/4442f64e24a44a57.png"></p>
+<p><em>Illustration: a convolutional neural network transforms "cubes" of data into other "cubes" of data.</em></p>
+<h2 is-upgraded=""><strong>Strided convolutions, max pooling</strong></h2>
+<p>By performing the convolutions with a stride of 2 or 3, we can also shrink the resulting data cube in its horizontal dimensions. There are two common ways of doing this:</p>
+<ul>
+<li>Strided convolution: a sliding filter as above but with a stride &gt;1</li>
+<li>Max pooling: a sliding window applying the MAX operation (typically on 2x2 patches, repeated every 2 pixels)</li>
+</ul>
+<p class="image-container"><img style="width: 474.14px" src="./TensorFlow, Keras and deep learning, without a PhD_files/f46fc9911734faf.gif"></p>
+<p><em>Illustration: sliding the computing window by 3 pixels results in fewer output values. Strided convolutions or max pooling (max on a 2x2 window sliding by a stride of 2) are a way of shrinking the data cube in the horizontal dimensions.</em></p>
+<aside class="special"><p>"<strong>Max-pooling</strong>" can help us understand intuitively how convolutional networks operate: if you assume that during training, the patches of weights evolve into filters that recognise basic shapes (horizontal and vertical lines, curves, ...), then one way of boiling useful information down is to keep through the layers the outputs where a shape was recognised with the maximum intensity. In practice, in a max-pool layer neuron outputs are processed in groups of 2x2 and only the max value is retained.</p>
+</aside>
+<h3 is-upgraded=""><strong>The final layer</strong></h3>
+<p>After the last convolutional layer, the data is in the form of a  "cube". There are two ways of feeding it through the final dense layer.</p>
+<p>The first one is to flatten the cube of data into a vector and then feed it to the softmax layer. Sometimes, you can even add a dense layer before the softmax layer. This tends to be expensive in terms of the number of weights. A dense layer at the end of a convolutional network can contain more than half the weights of the whole neural network.</p>
+<p>Instead of using an expensive dense layer, we can also split the incoming data "cube" into as many parts as we have classes, average their values and feed these through a softmax activation function. This way of building the classification head costs 0 weights. In Keras, there is a layer for this: <code>tf.keras.layers.GlobalAveragePooling2D()</code>.</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/a44aa392c7b0e32a.png"></p>
+<aside class="special"><p>Convolutional neural networks detect the location of things. When a filter responds strongly to some feature, it does so in a specific (x, y) location. Depending on what you want to do, a neural network can be trained to either use or discard this location data. Using global average pooling explicitly discards all location data. That might be fine for a flower classifier, but might not work well for other tasks, such as counting flowers in an image. Use with caution.</p>
+</aside>
+<p>Jump to the next section to build a convolutional network for the problem at hand.</p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="A convolutional network" duration="15" step="11"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">11. A convolutional network</h2>
+        <p>Let us build a convolutional network for handwritten digit recognition. We will use three convolutional layers at the top, our traditional softmax readout layer at the bottom and connect them with one fully-connected layer:</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/e1a214a170957da1.png"></p>
+<p>Notice that the second and third convolutional layers have a stride of two which explains why they bring the number of output values down from 28x28 to 14x14 and then 7x7.</p>
+<p>Let's write the Keras code.</p>
+<p>Special attention is needed before the first convolutional layer. Indeed, it expects a 3D ‘cube' of data but our dataset has so far been set up for dense layers and all the pixels of the images are flattened into a vector. We need to reshape them back into 28x28x1 images (1 channel for grayscale images):</p>
+<pre><code><span class="pln">tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Reshape</span><span class="pun">(</span><span class="pln">input_shape</span><span class="pun">=(</span><span class="lit">28</span><span class="pun">*</span><span class="lit">28</span><span class="pun">,),</span><span class="pln"> target_shape</span><span class="pun">=(</span><span class="lit">28</span><span class="pun">,</span><span class="pln"> </span><span class="lit">28</span><span class="pun">,</span><span class="pln"> </span><span class="lit">1</span><span class="pun">))</span></code></pre>
+<p>You can use this line instead of the <code>tf.keras.layers.Input</code> layer you had up to now.</p>
+<p>In Keras, the syntax for a ‘relu'-activated convolutional layer is:</p>
+<p class="image-container"><img style="width: 280.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/f20a317ba2c62342.png"></p>
+<pre><code><span class="pln">tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Conv2D</span><span class="pun">(</span><span class="pln">kernel_size</span><span class="pun">=</span><span class="lit">3</span><span class="pun">,</span><span class="pln"> filters</span><span class="pun">=</span><span class="lit">12</span><span class="pun">,</span><span class="pln"> padding</span><span class="pun">=</span><span class="str">'same'</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'relu'</span><span class="pun">)</span></code></pre>
+<aside class="special"><p>The padding parameter in convolutional layers can have two values:</p>
+<ul>
+<li>"same": pad with zeros so as to produce outputs of the same width/height as the input</li>
+<li>"valid": no padding, only use real pixels</li>
+</ul>
+<p>We do use padding here so please set padding to "same".</p>
+</aside>
+<p>For a strided convolution, you would write:</p>
+<pre><code><span class="pln">tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Conv2D</span><span class="pun">(</span><span class="pln">kernel_size</span><span class="pun">=</span><span class="lit">6</span><span class="pun">,</span><span class="pln"> filters</span><span class="pun">=</span><span class="lit">24</span><span class="pun">,</span><span class="pln"> padding</span><span class="pun">=</span><span class="str">'same'</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'relu'</span><span class="pun">,</span><span class="pln"> strides</span><span class="pun">=</span><span class="lit">2</span><span class="pun">)</span></code></pre>
+<p>To flatten a cube of data into a vector so that it can be consumed by a dense layer:</p>
+<pre><code><span class="pln">tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Flatten</span><span class="pun">()</span></code></pre>
+<p>And for dense layer, the syntax has not changed:</p>
+<pre><code><span class="pln">tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Dense</span><span class="pun">(</span><span class="lit">200</span><span class="pun">,</span><span class="pln"> activation</span><span class="pun">=</span><span class="str">'relu'</span><span class="pun">)</span></code></pre>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>Modify your model to turn it into a convolutional model. You can use the values from the drawing above to size it. You can keep your learning rate decay as it was, but <strong>please remove dropout</strong> at this point.</p>
+<p>Please also bump the zoom factor to 16 in PlotTraining. This zooms around 0 on losses and around 1 on accuracies to help you see what is going on: <code>PlotTraining(sample_rate=10, </code><strong><code>zoom=16</code></strong><code>)</code></p>
+</aside>
+<p>Did your model break the 99% accuracy barrier? Pretty close...  but look at the validation loss curve. Does this ring a bell?</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/46bc4990f66401bf.png"></p>
+<p>Also look at the predictions. For the first time, you should see that most of the 10,000 test digits are now correctly recognized. Only about 4½ rows of misdetections remain (about 110 digits out of 10,000)</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/76e2de0d79c84eb9.png"></p>
+<p>If you are stuck, here is the solution at this point:</p>
+<p><img style="width: 28.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/983220a6ead98ce0.png"><a href="https://colab.research.google.com/github/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-mnist-tutorial/keras_04_mnist_convolutional.ipynb" target="_blank"><strong><code>keras_04_mnist_convolutional.ipynb</code></strong></a></p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Dropout again" duration="10" step="12"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">12. Dropout again</h2>
+        <p>The previous training exhibits clear signs of overfitting (and still falls short of 99% accuracy). Should we try dropout again?</p>
+<aside class="warning"><p><strong>HANDS ON</strong>:</p>
+<p>Add a dropout layer <strong>between the two dense</strong> layers in your network. Use a dropout rate of 40% (=0.4):</p>
+<p><code>tf.keras.layers.Dropout(0.4)</code></p>
+<p>Applying dropout to convolutional layers is possible but it works slightly differently and is usually not as effective because there are far fewer weights in the convolutional layers and therefore fewer chances for a bad co-adaptation. We will not explore this.</p>
+</aside>
+<p>How did it go this time?</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/ed86c9af4b92705.png"></p>
+<p>It looks like dropout has worked this time. The validation loss is not creeping up anymore and the final accuracy should be way above 99%. Congratulations!</p>
+<p>The first time we tried to apply dropout, we thought we had an overfitting problem, when in fact the problem was in the architecture of the neural network. We could not go further without convolutional layers and there is nothing dropout could do about that.</p>
+<p>This time, it does look like overfitting was the cause of the problem and dropout actually helped. Remember, there are many things that can cause a disconnect between the training and validation loss curves, with the validation loss creeping up. Overfitting (too many degrees of freedom, used badly by the network) is only one of them. If your dataset is too small or the architecture of your neural network is not adequate, you might see a similar behavior on the loss curves, but dropout will not help.</p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Batch normalization" duration="0" step="13"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">13. Batch normalization</h2>
+        <p class="image-container"><img style="width: 602.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/pasted image 0.png"></p>
+<p>Finally, let's try to add batch normalization.</p>
+<aside class="special"><p><strong>What is batch normalization?</strong></p>
+<p>In a nutshell, batch norm tries to address the problem of how neuron outputs are distributed relatively to the neuron's activation function. Across a mini-batch of training data, a neuron output, before activation, could have the following distributions:</p>
+<p class="image-container"><img style="width: 317.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/Screen Shot 2019-06-17 at 19.49.57.png"></p>
+<p><em>Too far to the left, after sigmoid activation, this neuron almost always outputs 0.</em></p>
+<p class="image-container"><img style="width: 326.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/Screen Shot 2019-06-17 at 19.51.18.png"></p>
+<p><em>Too narrow, this neuron never outputs a clear 0 or 1.</em></p>
+<p class="image-container"><img style="width: 328.08px" src="./TensorFlow, Keras and deep learning, without a PhD_files/Screen Shot 2019-06-17 at 19.52.38.png"></p>
+<p><em>This is not too bad. The neuron will have a fair range of behaviors across this mini-batch.</em></p>
+<p>To fix this, batch norm normalizes neuron outputs across a training batch of data, i.e it subtracts the average and divides by the standard deviation. However, doing just that would be too brutal. With a perfectly centered and normally wide distribution everywhere, all neurons would have the same behavior. The trick is to introduce two additional learnable parameters per neuron, 𝛼 and 𝛽, and to compute:</p>
+<p>𝛼 . normalized_out + 𝛽</p>
+<p>And then apply the activation function (sigmoid, relu, ...). This way, the network decides, through machine learning, how much centering and re-scaling to apply at each neuron. It is left as an exercise for the reader to verify that there are values of 𝛼 and 𝛽 that can remove the normalization entirely, if that is the right thing to do.</p>
+<p>In practice, 𝛼 and 𝛽 are not always both needed. In Keras,  they are called "scale" and "center" and you can selectively use one or the other, for example:</p>
+<p><strong><code>tf.keras.layers.BatchNormalization(scale=False, center=True)</code></strong></p>
+<p>The problem with batch norm is that at prediction time, you do not have training batches over which you could compute the statistics of your neuron outputs. But you still need those values. This part is a bit hacky. During training, a "typical" neuron output average and standard deviation is computed across a "sufficient" number of batches, in practice using a running exponential average. These stats are then used at inference time.</p>
+<p><strong>The good news is that in Keras you can use a </strong><strong><code>tf.keras.layers.BatchNormalization</code></strong><strong> layer and all this accounting will happen automatically.</strong></p>
+</aside>
+<p>That's the theory, in practice, just remember a couple of rules:</p>
+<aside class="special"><p><strong>Batch norm "by the book":</strong></p>
+<ol type="1" start="1">
+<li>Batch normalization goes between the output of a layer and its activation function.</li>
+<li>If you use <code>center=True</code> in batch norm, you do not need biases in your layer. The batch norm offset plays the role of a bias.</li>
+<li>If you use an activation function that is scale-invariant (i.e. does not change shape if you zoom on it) then you can set <code>scale=False</code>. Relu is scale-invariant. Sigmoid is not.</li>
+</ol>
+<p>This is the theory, however, the only way to find out if breaking these rules is bad is to try.</p>
+</aside>
+<p>Let's play by the book for now and add a batch norm layer on each neural network layer but the last. Do not add it to the last "softmax" layer. It would not be useful there.</p>
+<pre><code><span class="com"># Modify each layer: remove the activation from the layer itself.</span><span class="pln">
+</span><span class="com"># Set use_bias=False since batch norm will play the role of biases.</span><span class="pln">
+tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Conv2D</span><span class="pun">(...,</span><span class="pln"> use_bias</span><span class="pun">=</span><span class="kwd">False</span><span class="pun">),</span><span class="pln">
+</span><span class="com"># Batch norm goes between the layer and its activation.</span><span class="pln">
+</span><span class="com"># The scale factor can be turned off for Relu activation.</span><span class="pln">
+tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">BatchNormalization</span><span class="pun">(</span><span class="pln">scale</span><span class="pun">=</span><span class="kwd">False</span><span class="pun">,</span><span class="pln"> center</span><span class="pun">=</span><span class="kwd">True</span><span class="pun">),</span><span class="pln">
+</span><span class="com"># Finish with the activation.</span><span class="pln">
+tf</span><span class="pun">.</span><span class="pln">keras</span><span class="pun">.</span><span class="pln">layers</span><span class="pun">.</span><span class="typ">Activation</span><span class="pun">(</span><span class="str">'relu'</span><span class="pun">),</span></code></pre>
+
+<p>How is the accuracy now?</p>
+<p class="image-container"><img style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/90b8cb1838a00d8a.png"></p>
+<p>With a little bit of tweaking (BATCH_SIZE=64, learning rate decay parameter 0.666, dropout rate on dense layer 0.3) and a bit of luck, you can get to 99.5%. The learning rate and dropout adjustments were done following the "best practices" for using batch norm:</p>
+<ul>
+<li>Batch norm helps neural networks converge and usually allows you to train faster.</li>
+<li>Batch norm is a regularizer. You can usually decrease the amount of dropout you use, or even not use dropout at all.</li>
+</ul>
+<p>The solution notebook has a 99.5% training run:</p>
+<p><img style="width: 28.50px" src="./TensorFlow, Keras and deep learning, without a PhD_files/983220a6ead98ce0.png"><a href="https://colab.research.google.com/github/GoogleCloudPlatform/tensorflow-without-a-phd/blob/master/tensorflow-mnist-tutorial/keras_05_mnist_batch_norm.ipynb" target="_blank"><strong><code>keras_05_mnist_batch_norm.ipynb</code></strong></a></p>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Train in the cloud on powerful hardware: AI Platform" duration="0" step="14"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">14. Train in the cloud on powerful hardware: AI Platform</h2>
+        <p class="image-container"><img style="width: 294.33px" src="./TensorFlow, Keras and deep learning, without a PhD_files/3e5f236d495de1e.png"></p>
+<p>You will find a cloud-ready version of the code in the <a href="https://github.com/GoogleCloudPlatform/tensorflow-without-a-phd/tree/master/tensorflow-mnist-tutorial/mlengine" target="_blank">mlengine folder on GitHub</a>, along with instructions for running it on <a href="https://cloud.google.com/ai-platform/" target="_blank">Google Cloud AI Platform</a>. Before you can run this part, you will have to create a Google Cloud account and enable billing. The resources necessary to complete the lab should be less than a couple of dollars (assuming 1h of training time on one GPU). To prepare your account:</p>
+<ol type="1" start="1">
+<li>Create a Google Cloud Platform project (<a href="http://cloud.google.com/console" target="_blank">http://cloud.google.com/console</a>).</li>
+<li>Enable billing.</li>
+<li>Install the GCP command line tools (<a href="https://cloud.google.com/sdk/downloads#interactive" target="_blank">GCP SDK here</a>).</li>
+<li>Create a Google Cloud Storage bucket (put in the region <code>us-central1</code>). It will be used to stage the training code and store your trained model.</li>
+<li>Enable the necessary APIs and request the necessary quotas (run the training command once and you should get error messages telling you what to enable).</li>
+</ol>
+
+
+      </div></div></google-codelab-step><google-codelab-step label="Congratulations!" duration="0" step="15"><div class="instructions"><div class="inner"><h2 is-upgraded="" class="step-title">15. Congratulations!</h2>
+        <p>You have built your first neural network and trained it all the way to 99% accuracy. The techniques learned along the way are not specific to the MNIST dataset, actually they are widely used when working with neural networks. As a parting gift, here is the "cliff's notes" card for the lab, in cartoon version. You can use it to remember what you have learned:</p>
+<p class="image-container"><img alt="cliffs notes tensorflow lab.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/c33bb148d5014914.png"></p>
+<h3 is-upgraded=""><strong>Next steps</strong></h3>
+<ul>
+<li>After fully-connected and convolutional networks, you should have a look at <a href="https://youtu.be/fTUwdXUFfI8" target="_blank">recurrent neural networks</a>.</li>
+<li>To run your training or inference in the cloud on a distributed infrastructure, Google Cloud provides <a href="https://cloud.google.com/ai-platform/" target="_blank">AI Platform</a>.<br></li>
+<li>Finally, we love feedback. Please tell us if you see something amiss in this lab or if you think it should be improved. We handle feedback through GitHub issues [<a href="https://github.com/googlecodelabs/feedback/issues/new?title=[cloud-tensorflow-mnist]:&amp;labels[]=content-platform&amp;labels[]=cloud" target="_blank">feedback link</a>].</li>
+</ul>
+<p class="image-container"><img alt="HR.png" style="width: 624.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/4c2925956f9292.png"></p>
+<table>
+<tbody><tr><td colspan="1" rowspan="1"><p class="image-container"><img alt="Martin Görner ID small.jpg" style="width: 160.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/1dd39cb813f337e2.jpeg"></p>
+<p>The author: Martin Görner</p>
+<p>Twitter: <a href="https://twitter.com/martin_gorner" target="_blank">@martin_gorner</a></p>
+</td><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 298.00px" src="./TensorFlow, Keras and deep learning, without a PhD_files/35be9f6ad0aceb7a.png"></p>
+</td></tr>
+</tbody></table>
+<p>All cartoon images in this lab copyright: <a href="http://fr.123rf.com/profile_alexpokusay" target="_blank">alexpokusay / 123RF stock photos</a></p>
+
+
+      </div></div></google-codelab-step></div><div id="controls"><div id="fabs"><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#" id="previous-step" title="Previous step" disappear="">Back</a><div class="spacer"></div><a href="https://codelabs.developers.google.com/codelabs/cloud-tensorflow-mnist/#" id="next-step" title="Next step">Next</a><a href="https://codelabs.developers.google.com/" id="done" hidden="" title="Codelab complete">Done</a></div></div></div></google-codelab>
+
+  <script src="./TensorFlow, Keras and deep learning, without a PhD_files/native-shim.js.下載"></script>
+  <script src="./TensorFlow, Keras and deep learning, without a PhD_files/custom-elements.min.js.下載"></script>
+  <script src="./TensorFlow, Keras and deep learning, without a PhD_files/prettify.js.下載"></script>
+  <script src="./TensorFlow, Keras and deep learning, without a PhD_files/codelab-elements.js.下載"></script>
+
+
+
+</body></html>
